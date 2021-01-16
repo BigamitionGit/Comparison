@@ -1,0 +1,47 @@
+name: Comparison
+options:
+  minimumXcodeGenVersion: "2.6.0"
+  bundleIdPrefix: "Bigamition"
+  deploymentTarget:
+    iOS: "13.0"
+configs:
+  Debug: debug
+  Staging: release
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: "5.3.2"
+    CODE_SIGN_STYLE: "Automatic"
+    TARGETED_DEVICE_FAMILY: "1"
+  configs:
+    Staging:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: "STAGING"
+targets:
+  Comparison:
+    type: application
+    platform: iOS
+    sources:
+      - path: Comparison
+    preBuildScripts:
+      - name: Run SwiftLint
+        script:  | 
+                if which swiftlint >/dev/null; then
+                swiftlint autocorrect --format
+                swiftlint
+                else
+                echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+                fi 
+  ComparisonTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ComparisonTests
+    dependencies:
+      - target: Comparison
+  ComparisonUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: 
+      - path: ComparisonUITests
+    dependencies:
+      - target: Comparison

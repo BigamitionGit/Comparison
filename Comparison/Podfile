@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+plugin 'cocoapods-binary'
+
+use_frameworks!
+
+target 'Comparison' do
+  # Pods for Comparison
+  pod 'Alamofire', '~> 5.4.1', :binary => true
+
+  pod 'Firebase/Crashlytics', "7.3.0", :binary => true
+  pod 'Firebase/Analytics', "7.3.0", :binary => true
+  pod 'Firebase/Performance', "7.3.0", :binary => true
+
+  target 'ComparisonTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'ComparisonUITests' do
+    # Pods for testing
+  end
+
+end
