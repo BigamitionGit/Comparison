@@ -1,0 +1,45 @@
+disabled_rules:
+  - line_length
+  - cyclomatic_complexity
+  - force_unwrapping
+  - force_cast
+  - identifier_name
+  - todo
+
+opt_in_rules:
+  - closure_spacing
+  - closure_end_indentation
+  - explicit_init
+  - redundant_nil_coalescing
+  - overridden_super_call
+
+file_length:
+  warning: 800
+  error: 1200
+
+function_body_length:
+  warning: 500
+  error: 1200
+
+type_body_length:
+  warning: 500
+  error: 1200
+
+type_name:
+  allowed_symbols: "_"
+
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+
+vertical_whitespace:
+  max_empty_lines: 2
+
+identifier_name:
+  excluded:
+    - id
+
+excluded:
+  - fastlane
+  - vendor
+  - Pods
