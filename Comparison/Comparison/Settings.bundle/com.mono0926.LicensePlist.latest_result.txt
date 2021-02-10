@@ -1,0 +1,19 @@
+name: Firebase, nameSpecified: 
+body: 
+                   …
+version: 7.3.0
+
+name: Firebase, nameSpecified: 
+body: 
+                   …
+version: 7.3.0
+
+name: LicensePlist, nameSpecified: , owner: mono0926, version: 3.0.5
+
+name: SwiftLint, nameSpecified: , owner: realm, version: 0.42.0
+
+name: XcodeGen, nameSpecified: , owner: yonaskolb, version: 2.18.0
+
+add-version-numbers: true
+
+LicensePlist Version: 3.0.5
