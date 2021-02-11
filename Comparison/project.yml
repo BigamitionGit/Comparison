@@ -3,7 +3,7 @@ options:
   minimumXcodeGenVersion: "2.6.0"
   bundleIdPrefix: "Bigamition"
   deploymentTarget:
-    iOS: "13.0"
+    iOS: "14.0"
 configs:
   Debug: debug
   Staging: release
