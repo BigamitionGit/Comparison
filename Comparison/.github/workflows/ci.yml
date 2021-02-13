@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.4.app/Contents/Developer
+  FASTLANE_SKIP_UPDATE_CHECK: true
+  FASTLANE_XCODE_LIST_TIMEOUT: 60
+  FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
+  HOMEBREW_NO_INSTALL_CLEANUP: TRUE
+  BUNDLE_PATH: vendor/bundle
+
+jobs:
+  test:
+    runs-on: macos-latest
+    env:
+      MINT_PATH: mint/lib
+      MINT_LINK_PATH: mint/bin
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Cache Gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install Bundled Gems
+        run: make install-bundler
+
+      - name: Install Mint
+        run: brew install mint
+
+      - name: Cache Mint packages
+        uses: actions/cache@v2
+        with:
+          path: mint
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-
+
+      - name: Install Mint Dependencies
+        run: make install-mint
+
+      - name: Generate xcodeproj
+        run: make generate-xcodeproj
+
+      - name: Run tests
+        run: bundle exec fastlane test
+
+      - uses: codecov/codecov-action@v1
+        name: "Upload Code Coverage"
+
+      - uses: actions/upload-artifact@v2
+        name: "Upload Test Logs"
+        if: ${{ always() }}
+        with:
+          name: test-logs
+          path: |
+            ~/Library/Logs/DiagnosticReports
+            ~/Library/Developer/Xcode/DerivedData/HomeAssistant-*/Logs/Test
+            ~/Library/Logs/scan
